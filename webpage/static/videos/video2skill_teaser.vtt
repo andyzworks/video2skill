@@ -1,0 +1,37 @@
+WEBVTT
+
+00:00:00.350 --> 00:00:04.300
+Vision-language models can describe what happens in a video.
+
+00:00:04.600 --> 00:00:08.250
+But can they turn a stream of videos into reusable skills?
+
+00:00:08.550 --> 00:00:10.325
+Meet Video2Skill.
+
+00:00:10.625 --> 00:00:15.750
+A model watches videos one after another, and keeps a persistent skill library.
+
+00:00:16.050 --> 00:00:21.025
+For every event, it must decide: reuse an existing skill, or create a new one.
+
+00:00:21.325 --> 00:00:27.525
+Our benchmark spans robot and human manipulation, with over twelve thousand verified skill calls.
+
+00:00:27.825 --> 00:00:33.075
+We tested 19 open-source VLMs. Many group events at near-chance level.
+
+00:00:33.375 --> 00:00:39.150
+Unified models merge distinct skills, while factorized models duplicate recurring ones.
+
+00:00:39.450 --> 00:00:46.050
+Fine-tuning, including our CLaRe method, improves grouping, but models still reuse far more than they create.
+
+00:00:46.350 --> 00:00:49.525
+Their libraries stall below half the reference size.
+
+00:00:49.825 --> 00:00:54.175
+The open challenge: recognizing when existing skills are not enough.
+
+00:00:54.475 --> 00:00:57.700
+Paper, code, and data are on our project page.
