@@ -1,4 +1,5 @@
 # Publish the project page in webpage/ to GitHub Pages.
+# Runs on every push that touches webpage/, or manually from Actions -> "Deploy webpage to GitHub Pages" -> Run workflow.
 name: Deploy webpage to GitHub Pages
 
 on:
