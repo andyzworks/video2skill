@@ -1,0 +1,148 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:07.450
+Welcome to a quick walkthrough of Video2Skill: From Streaming Experience to Reusable Embodied Skills.
+
+00:00:07.800 --> 00:00:15.150
+In the next few minutes, we'll cover the problem, the benchmark, how current models behave, and what we learned from training them.
+
+00:00:16.550 --> 00:00:24.600
+Manipulation behaviors vary enormously across objects and scenes, yet they are built from a much smaller set of shared skills.
+
+00:00:24.950 --> 00:00:30.300
+Wiping a table, a plate, or a window all instantiate the same wiping skill.
+
+00:00:30.650 --> 00:00:37.900
+Planning over such skills helps embodied agents generalize, but an agent can only plan with the skills it knows.
+
+00:00:38.250 --> 00:00:49.050
+So we study the inverse problem: watching experience, and recovering the skills that produced it, as symbolic schemas that can be recognized, composed, and inspected.
+
+00:00:50.450 --> 00:00:59.050
+Vision-language models can already describe individual events. But describing events is not the same as building a skill library.
+
+00:00:59.400 --> 00:01:03.375
+Here, video one introduces grasp, transfer, and place.
+
+00:01:03.725 --> 00:01:08.650
+Video two reuses all three, even though the objects and scene have changed.
+
+00:01:09.000 --> 00:01:17.900
+Video three reuses grasp and transfer, but adds a new skill, throw, because tossing fabric is a genuinely different transformation.
+
+00:01:18.250 --> 00:01:23.625
+So, event by event, the model has to decide whether to reuse or to create.
+
+00:01:25.025 --> 00:01:29.850
+We call this problem Streaming Embodied Skill Discovery, or SESD.
+
+00:01:30.200 --> 00:01:33.125
+The model watches videos chunk by chunk.
+
+00:01:33.475 --> 00:01:44.925
+At each step, it sees the new chunk together with its current skill library, and outputs the completed events, each with a time span, a schema, and arguments, plus any new schemas.
+
+00:01:45.275 --> 00:01:52.050
+The library starts empty and persists across videos, so every earlier decision shapes later ones.
+
+00:01:52.400 --> 00:02:00.550
+Creating duplicates fragments recurring experience, while reusing an overly broad schema merges distinct transformations.
+
+00:02:01.950 --> 00:02:15.475
+Our benchmark, Video2Skill, covers two domains: egocentric kitchen activity from HD-EPIC, and robot tabletop manipulation from RoboInter, drawn from DROID and RH20T.
+
+00:02:15.825 --> 00:02:20.525
+Every event is checked against the video and written as a typed skill call.
+
+00:02:20.875 --> 00:02:29.400
+In total, 12,429 verified calls are organized into 48 canonical transformation classes.
+
+00:02:29.750 --> 00:02:33.800
+Models never see these classes. They name their skills freely.
+
+00:02:35.200 --> 00:02:37.300
+We evaluate three things.
+
+00:02:37.650 --> 00:02:42.450
+First, coverage: how many reference events the model locates in time.
+
+00:02:42.800 --> 00:02:50.050
+Second, skill grouping: whether events of the same transformation share a skill, regardless of the names chosen.
+
+00:02:50.400 --> 00:02:59.900
+Pair precision drops when distinct skills are merged, pair recall drops when one skill is fragmented, and the ARI summarizes overall agreement.
+
+00:03:00.250 --> 00:03:09.200
+Third, create and reuse recall: whether the model creates a new skill at a first occurrence, and reuses one when a transformation recurs.
+
+00:03:10.600 --> 00:03:14.725
+We tested 19 open-source VLMs in two paradigms.
+
+00:03:15.075 --> 00:03:24.150
+Unified models see the video and the library together; factorized models first describe events, then update the library from text.
+
+00:03:24.500 --> 00:03:30.425
+Many models group events at near-chance level, and the two paradigms fail in opposite ways.
+
+00:03:30.775 --> 00:03:41.500
+Unified models overmerge, reusing existing skills even for new transformations, while factorized models fragment, creating duplicates for recurring ones.
+
+00:03:41.850 --> 00:03:49.375
+Scaling doesn't reliably help either: the ARI stays at or below 27 across every configuration.
+
+00:03:50.775 --> 00:03:55.975
+Can supervision fix this? We fine-tune two backbones with three strategies.
+
+00:03:56.325 --> 00:04:02.625
+Oracle-history fine-tuning trains on the library states produced by the reference annotations.
+
+00:04:02.975 --> 00:04:10.225
+Our counterfactual library-state rebalancing, CLaRe, edits the library while keeping the observation fixed.
+
+00:04:10.575 --> 00:04:18.075
+Removing a needed skill should flip reuse into creation, while adding an irrelevant distractor should change nothing.
+
+00:04:18.425 --> 00:04:24.950
+On-policy correction trains the model on the states it actually reaches, including its own mistakes.
+
+00:04:26.350 --> 00:04:32.825
+All three strategies improve grouping over zero-shot, across backbones, domains, and paradigms.
+
+00:04:33.175 --> 00:04:34.950
+But a gap remains.
+
+00:04:35.300 --> 00:04:49.275
+Trained unified models reuse existing skills almost every time, with reuse recall of about 97 to 99 percent, yet they create a new skill at only 19 to 40 percent of first occurrences.
+
+00:04:49.625 --> 00:04:52.950
+Better grouping does not mean correct creation.
+
+00:04:54.350 --> 00:04:57.575
+This shows up clearly in how the library grows.
+
+00:04:57.925 --> 00:05:10.025
+Replaying the same 40 HD-EPIC clips in three different orders, the trained model always ends with just 21 to 22 skills, less than half of the 46 reference classes.
+
+00:05:10.375 --> 00:05:15.625
+Even when every new transformation appears early, the library barely expands.
+
+00:05:17.025 --> 00:05:21.000
+What about transformations the model never saw in training?
+
+00:05:21.350 --> 00:05:27.875
+For eleven such classes, trained models locate the events in time even better than they locate seen ones.
+
+00:05:28.225 --> 00:05:32.325
+Yet they give a new skill to at most one of them at its first occurrence.
+
+00:05:32.675 --> 00:05:37.525
+Training gains also concentrate on frequently demonstrated skills.
+
+00:05:38.925 --> 00:05:45.875
+To sum up: current VLMs describe events well, but struggle to organize them into reusable skills.
+
+00:05:46.225 --> 00:05:55.450
+Supervision helps them consolidate familiar skills, but recognizing when existing skills are insufficient remains the central challenge.
+
+00:05:55.800 --> 00:06:01.300
+The benchmark, code, and data are available on our project page. Thanks for watching!
