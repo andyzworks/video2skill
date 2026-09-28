@@ -1,0 +1,397 @@
+<!doctype html>
+
+<html lang="en">
+    <head>
+        <title>Video2Skill</title>
+        <link rel="icon" type="image/png" href="./static/img/icons/favicon.png">
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Video2Skill: a benchmark for Streaming Embodied Skill Discovery, where models organize streaming manipulation videos into a persistent library of reusable symbolic skills.">
+
+        <!-- Open Graph -->
+        <meta property="og:url" content="https://andyzworks.github.io/video2skill/" />
+        <meta property="og:image" content="https://andyzworks.github.io/video2skill/static/img/teaser.png" />
+        <meta property="og:title" content="Video2Skill: From Streaming Experience to Reusable Embodied Skills" />
+        <meta property="og:description" content="Can VLMs organize a stream of manipulation events into a persistent library of reusable skills?" />
+
+        <!-- Twitter -->
+        <meta name="twitter:url" content="https://andyzworks.github.io/video2skill/" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://andyzworks.github.io/video2skill/static/img/teaser.png" />
+        <meta name="twitter:title" content="Video2Skill: From Streaming Experience to Reusable Embodied Skills" />
+        <meta name="twitter:description" content="Can VLMs organize a stream of manipulation events into a persistent library of reusable skills?" />
+
+        <script src="./static/js/distill_template.v2.js"></script>
+        <script defer="" src="./static/js/hider.js"></script>
+
+        <link rel="stylesheet" href="./static/css/style.css">
+        <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css" integrity="sha384-yFRtMMDnQtDRO8rLpMIKrtPCD5jdktao2TV19YiZYWMDkUR5GQZR/NOVTdquEx1j" crossorigin="anonymous">
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.js" integrity="sha384-9Nhn55MVVN0/4OFx7EE5kpFBPsEMZxKTCnA+4fqDmg12eCTqGi6+BB2LjY8brQxJ" crossorigin="anonymous"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+            onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '\\(', right: '\\)', display: false}]});"></script>
+        <script defer src="./static/js/fontawesome.all.min.js"></script>
+
+        <!-- medium zoom https://github.com/francoischalifour/medium-zoom -->
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+        <script defer src="./static/js/medium-zoom.min.js"></script>
+        <script defer src="./static/js/zoom.js"></script>
+
+        <style>
+            .skill-create { color: rgb(246, 107, 50); }
+            .skill-reuse { color: rgb(8, 175, 130); }
+            .header-image img.teaser-image { max-width: 70%; }
+        </style>
+    </head>
+    <body>
+        <div class="header-wrapper">
+            <div class="header-container" id="header-container">
+                <div class="header-content">
+                    <h1 style="margin-top: 0px"><i>Video2Skill:</i></h1>
+                    <h2>From Streaming Experience to <br> Reusable Embodied Skills</h2>
+                        <p>
+                            Manipulation behaviors vary widely across objects and scenes, yet they share a small set of reusable skills. Vision-Language Models describe individual manipulation events well, but <em><strong>can they organize a stream of events into reusable skills?</strong></em> We study this question through:
+                        </p>
+
+                        <div class="icon-container">
+                            <div class="icon-item">
+                                <img src="./static/img/icons/connector.svg" alt="Task icon">
+                                <div><strong>Streaming Embodied Skill Discovery (SESD)</strong>: A model watches videos in sequence, grounds each manipulation event in time, and maintains a persistent skill library, deciding whether to <i>reuse</i> an existing skill or <i>create</i> a new one.</div>
+                            </div>
+                            <div class="icon-item">
+                                <img src="./static/img/icons/data.svg" alt="Benchmark icon">
+                                <div><strong>Video2Skill</strong>: A benchmark spanning robot tabletop manipulation (<i>RoboInter</i>) and egocentric kitchen activity (<i>HD-EPIC</i>) that jointly measures event coverage, naming-invariant skill grouping, and creation&ndash;reuse decisions.</div>
+                            </div>
+                            <div class="icon-item">
+                                <img src="./static/img/icons/magnifier.svg" alt="Findings icon">
+                                <div><strong>Evaluation and Supervision</strong>: 19 open-source VLMs and three fine-tuning strategies, including our counterfactual library-state rebalancing (<i>CLaRe</i>), reveal that recognizing when existing skills are insufficient is the central challenge.</div>
+                            </div>
+                        </div>
+
+                    <div class="button-container">
+                        <!-- Paper: replace href with the arXiv link once the paper is public -->
+                        <a href="#" class="button paper-link dark-button" target="_blank">
+                            <span class="icon is-small">
+                                <i class="fas fa-file-pdf"></i>
+                            </span>
+                            <span>Paper (coming soon)</span>
+                        </a>
+                        <!-- Code -->
+                        <a href="https://github.com/andyzworks/video2skill" class="button code-link dark-button" target="_blank">
+                            <span class="icon is-small">
+                                <i class="fab fa-github"></i>
+                            </span>
+                            <span>Code</span>
+                        </a>
+                        <!-- Benchmark media -->
+                        <a href="https://huggingface.co/datasets/tonyDzw/tmp1" class="button dark-button" target="_blank">
+                            <span class="icon is-small">
+                                <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face logo" style="height: 1em;">
+                            </span>
+                            <span>Benchmark</span>
+                        </a>
+                        <!-- Training media -->
+                        <a href="https://huggingface.co/datasets/tonyDzw/tmp2" class="button dark-button" target="_blank">
+                            <span class="icon is-small">
+                                <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face logo" style="height: 1em;">
+                            </span>
+                            <span>Training Data</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="header-image">
+                    <img draggable="false" src="static/img/icons/icon.png" alt="Video2Skill logo" class="teaser-image">
+                </div>
+            </div>
+        </div>
+    <d-article>
+        <div class="byline">
+            <div class="byline-container">
+                <p class="author-list">
+                    <span><a href="https://sterzhang.github.io/" class="author-link" target="_blank">Jianshu Zhang</a><sup>1*</sup></span>
+                    <span><a class="author-link">Ce Zhang</a><sup>2*</sup></span>
+                    <span><a class="author-link">Xiyuan Yang</a><sup>3</sup></span>
+                    <span><a class="author-link">Chenwei Xu</a><sup>1</sup></span>
+                    <span><a href="https://luhr2003.github.io/" class="author-link" target="_blank">Haoran Lu</a><sup>1</sup></span>
+                    <span><a class="author-link">Yijiang Li</a><sup>4</sup></span>
+                    <span><a class="author-link">Yaqi Xie</a><sup>2</sup></span>
+                    <span><a class="author-link">Katia P. Sycara</a><sup>2</sup></span>
+                    <span><a href="https://www.mccormick.northwestern.edu/research-faculty/directory/profiles/liu-han.html" class="author-link" target="_blank">Han Liu</a><sup>1</sup></span>
+                </p>
+                    <sup>1</sup>Northwestern University &emsp;
+                    <sup>2</sup>Carnegie Mellon University &emsp;
+                    <sup>3</sup>University of Illinois Urbana-Champaign &emsp;
+                    <sup>4</sup>University of California, San Diego &emsp;
+                    <span class="author-note"><sup>*</sup>Equal Contribution</span>
+            </div>
+        </div>
+
+        <d-figure id="fig-teaser">
+                <figure>
+                    <div style="text-align: center;">
+                        <img data-zoomable="" draggable="false" src="static/img/teaser.png" alt="Video2Skill teaser" style="width: 100%;">
+                    </div>
+                    <figcaption>
+                        <strong>Figure 1: From describing events to accumulating reusable skills.</strong>
+                        (A) Vision-Language Models recognize manipulation events in open-vocabulary language.
+                        (B) Video2Skill further organizes these observations into a persistent library of symbolic skills, grounding each event in time and deciding whether to
+                        <span class="skill-reuse"><em>reuse</em></span> an existing skill or
+                        <span class="skill-create"><em>introduce a new one</em></span>.
+                        Video 1 introduces <code>grasp</code>, <code>transfer</code>, and <code>place</code>; Video 2 reuses all three despite changes in objects and scene; Video 3 reuses <code>grasp</code> and <code>transfer</code> while adding <code>throw</code> for a new transformation.
+                        The library thus preserves shared structure across observations while expanding to accommodate novelty.
+                    </figcaption>
+                </figure>
+        </d-figure>
+
+        <p class="text abstract">
+            Manipulation behaviors vary widely across objects and scenes, but they share a small set of reusable skills, and planning with these skills helps embodied agents generalize to new tasks. Yet an agent can only plan with skills it knows. Recovering skills from observed experience, the inverse of planning, builds this knowledge over time and yields skill data for training future agents. Vision-Language Models (VLMs) describe individual manipulation events well, but can they organize a stream of events into reusable skills? We formulate this problem as <em>Streaming Embodied Skill Discovery (SESD)</em>: a model watches videos in sequence and maintains a persistent skill library that shapes its later decisions. To systematically measure this ability, we introduce Video2Skill, a benchmark that covers robot tabletop manipulation and human kitchen activity and tests three core capabilities: (i) locating manipulation events in time, (ii) grouping events of the same transformation, and (iii) deciding when to reuse an existing skill or create a new one. Across 19 open-source VLMs, many models group events at near-chance level, and scale does not consistently help. Their errors depend on how perception and library updates are coupled: joint models merge distinct transformations into one skill, while models that update the library from text descriptions duplicate recurring ones. Supervised fine-tuning, including our counterfactual library-state rebalancing (CLaRe), improves grouping but exposes a deeper bottleneck: trained models consolidate familiar skills yet rarely expand the library. Their libraries stall below half the reference size, and transformations unseen in training are located in time but almost never given a new skill. Recognizing when existing skills are insufficient thus emerges as the central challenge.
+        </p>
+
+        <div class="icon-row">
+            <a href="#sec:task" class="icon-link">
+                <img src="static/img/icons/connector.svg" alt="" class="icon">
+                Task <br> Formulation
+            </a>
+            <a href="#sec:bench" class="icon-link">
+                <img src="./static/img/icons/data.svg" alt="" class="icon">
+                Benchmark <br> Curation
+            </a>
+            <a href="#sec:zeroshot" class="icon-link">
+                <img src="./static/img/icons/eval.svg" alt="" class="icon">
+                Current <br> VLMs
+            </a>
+            <a href="#sec:training" class="icon-link">
+                <img src="./static/img/icons/recipe.svg" alt="" class="icon">
+                Learning a <br> Skill Library
+            </a>
+            <a href="#sec:analysis" class="icon-link">
+                <img src="./static/img/icons/magnifier.svg" alt="" class="icon">
+                Further <br> Analysis
+            </a>
+        </div>
+
+        <p class="click-hint">
+            <img src="static/img/icons/click.gif" style="width: 1.5rem">
+            <strong>Click to jump to each section.</strong>
+        </p>
+
+        <hr>
+
+        <div class="vision-block">
+
+            <div id="sec:task" class="sub-section">
+                <h1 class="text">Streaming Embodied Skill Discovery</h1>
+                <p class="text">
+                    A model processes an ordered stream of videos in chunks. At each step it receives a new chunk together with its current state: a persistent <strong>skill library</strong> and an optional unfinished event carried over from the previous chunk. It outputs any new schemas, the completed events in the chunk, and an updated unfinished event:
+                </p>
+                <p class="text">
+                    $$y_t \sim \pi_\theta(\cdot \mid x_t, z_{t-1}), \qquad y_t = (\mathcal{D}_t, \mathcal{E}_t, u_t), \qquad \mathcal{L}_t = \mathcal{L}_{t-1} \cup \mathcal{D}_t.$$
+                </p>
+                <p class="text">
+                    Each event specifies its temporal boundaries, a schema, and argument bindings, e.g. <code>grasp(object, source)</code>. A schema has a free-form name, a definition, and typed argument slots; it describes a physical transformation rather than an executable controller. The library starts empty and <em>persists across videos</em>, so every earlier creation and reuse decision shapes how later observations are interpreted.
+                    Creating duplicate schemas fragments recurring experience, while reusing an overly broad schema merges distinct transformations.
+                </p>
+            </div>
+
+            <div id="sec:bench" class="sub-section">
+                <h1 class="text">Benchmark Curation and Evaluation</h1>
+                <p class="text">
+                    <strong>Source data.</strong> Video2Skill spans human and robot manipulation: <em>HD-EPIC</em> provides long egocentric recordings of unscripted kitchen activity, and <em>RoboInter</em> provides robot tabletop videos drawn from DROID and RH20T. Median reference segments in the verified test splits last 1.9&nbsp;s and 4.5&nbsp;s, respectively.
+                </p>
+                <p class="text">
+                    <strong>Curation.</strong> Annotation prioritizes visual evidence over source labels. Each candidate segment is checked against the video; labels whose stated manipulation is not visually supported are discarded. Retained events are typed skill calls with arguments drawn from seven roles (object, source, destination, instrument, direction, substance, state). Review corrected 241 of 12,429 verified calls, which are organized into <strong>48 canonical transformation classes</strong> that define the reference partition. Models never see this class list and name their schemas freely.
+                </p>
+                <p class="text">
+                    <strong>Splits.</strong> HD-EPIC: 42 training videos (5,726 calls) and 40 test clips from 29 held-out recordings (1,137 segments, 46 classes). RoboInter: 2,992 training videos (5,032 calls) and 132 test videos (534 segments, 15 classes). Training and test splits are disjoint at the source-video level.
+                </p>
+                <p class="text">
+                    Evaluation covers three complementary dimensions:
+                    <ol class="text">
+                        <li>
+                            <strong>Temporal coverage.</strong> Each reference event is matched to its highest-tIoU prediction (IoU &ge; 0.3); coverage is the fraction of reference events recovered.
+                        </li>
+                        <li>
+                            <strong>Naming-invariant skill grouping.</strong> Over matched events, including cross-video pairs, pair precision (low &rarr; overmerging), pair recall (low &rarr; fragmentation), and the Adjusted Rand Index (ARI) compare the predicted partition with the reference classes, independently of schema names.
+                        </li>
+                        <li>
+                            <strong>Creation&ndash;reuse decisions.</strong> Walking through matched events in order, <span class="skill-create">Create</span> recall measures whether first occurrences of a reference class receive a new name, and <span class="skill-reuse">Reuse</span> recall measures whether recurrences receive a previously used one.
+                        </li>
+                    </ol>
+                </p>
+            </div>
+
+            <div id="sec:zeroshot" class="sub-section">
+                <h1 class="text">How Do Current Models Behave?</h1>
+                <p class="text">
+                    We evaluate 19 open-source VLMs without task-specific training under two paradigms. <strong>Unified</strong> models jointly ground events and update the library from visual input; <strong>factorized</strong> models first propose events without library access, then use the same model for text-only library updates.
+                </p>
+                <d-figure id="fig-zeroshot">
+                    <figure>
+                        <div style="text-align: center;">
+                            <img data-zoomable="" draggable="false" src="static/img/table_zeroshot.png" alt="Zero-shot results table" style="width: 95%;">
+                        </div>
+                        <figcaption>
+                            <strong>Table 1: Raw model performance on SESD.</strong>
+                            Unified models jointly identify events and update the skill library; factorized models first propose events without library access, then use the same model for text-only library updates.
+                            Results use verified test splits in balanced order. Create R and Reuse R denote recall. All scores are multiplied by 100; ARI can be negative.
+                        </figcaption>
+                    </figure>
+                </d-figure>
+
+                <p class="text">
+                    <ul class="text">
+                        <li>
+                            <strong>Unified models overmerge; factorized models fragment.</strong>
+                            Unified models tend to reuse existing schemas even when a new transformation appears (high reuse recall, low creation recall, low pair precision). Factorized models create schemas more readily but repeatedly split recurring transformations across duplicate names. On HD-EPIC, switching Qwen3.5-2B from unified to factorized raises pair precision from 9.2 to 48.0 but drops pair recall from 53.8 to 2.4.
+                        </li>
+                        <li>
+                            <strong>Scaling does not consistently improve skill abstraction.</strong>
+                            Scaling unified Qwen3.5 from 4B to 27B improves ARI on HD-EPIC (8.7 &rarr; 19.9) but lowers it on RoboInter (19.4 &rarr; 4.6); InternVL3.5 shows no monotonic trend either. ARI stays at or below 27.0 across all configurations.
+                        </li>
+                        <li>
+                            <strong>Coverage and grouping must be read together.</strong>
+                            Factorized LLaVA-OneVision-2-8B reaches the highest RoboInter coverage (71.7%) with an ARI of only 0.1, while unified MiniCPM-V-4.5 attains the best HD-EPIC ARI (25.6) on just 7.5% of reference events.
+                        </li>
+                    </ul>
+                </p>
+            </div>
+
+            <div id="sec:training" class="sub-section">
+                <h1 class="text">Learning to Maintain a Skill Library</h1>
+                <p class="text">
+                    We fine-tune Qwen3.5-4B and LLaVA-OneVision-2-8B under both paradigms with three supervised strategies that differ in <em>which library states</em> the model sees during training:
+                    <ul class="text">
+                        <li>
+                            <strong>Oracle-history SFT</strong> replays annotated episodes in order, so each observation is paired with the library produced by the preceding reference outputs.
+                        </li>
+                        <li>
+                            <strong>Counterfactual Library-state Rebalancing (CLaRe)</strong> edits the library while holding the observation fixed. Removing a required schema turns reuse into creation, while adding lexical distractors or removing unrelated entries should leave the assignment unchanged. This supervises both sensitivity to relevant changes and consistency under irrelevant ones.
+                        </li>
+                        <li>
+                            <strong>On-policy correction</strong> rolls out the student over training episodes and relabels the states it actually reaches, providing supervision under its own accumulated errors.
+                        </li>
+                    </ul>
+                </p>
+                <d-figure id="fig-sft">
+                    <figure>
+                        <div style="text-align: center;">
+                            <img data-zoomable="" draggable="false" src="static/img/table_sft.png" alt="Supervision results table" style="width: 95%;">
+                        </div>
+                        <figcaption>
+                            <strong>Table 2: Effect of supervision on Video2Skill across two backbones.</strong>
+                            Pink highlights column maxima among the three supervised variants within each backbone and paradigm, including ties.
+                            All scores are multiplied by 100; ARI can be negative.
+                        </figcaption>
+                    </figure>
+                </d-figure>
+
+                <p class="text">
+                    <ul class="text">
+                        <li>
+                            <strong>Supervision mitigates both failure tendencies.</strong>
+                            All three strategies improve ARI over zero-shot across both backbones, domains, and paradigms. Oracle-history SFT raises unified Qwen3.5-4B's pair precision from 30.0 to 67.6 on RoboInter; on-policy correction raises factorized LLaVA's reuse recall on RoboInter from 29.1 to 94.6.
+                        </li>
+                        <li>
+                            <strong>Training-state interventions help in different settings.</strong>
+                            Oracle-history SFT achieves the highest unified ARI in all four backbone&ndash;domain settings. CLaRe raises coverage and creation recall for unified Qwen3.5-4B on HD-EPIC, and on-policy correction attains the highest factorized reuse recall in every setting, without uniformly improving ARI.
+                        </li>
+                        <li>
+                            <strong>Better grouping does not ensure correct creation and reuse.</strong>
+                            Trained unified models keep reuse recall at 97.0&ndash;98.7 while creation recall reaches only 19.1&ndash;40.0: most first occurrences of a transformation still receive a previously used name.
+                        </li>
+                    </ul>
+                </p>
+            </div>
+
+            <div id="sec:analysis" class="sub-section">
+                <h1 class="text">Further Analysis</h1>
+
+                <h2 class="text">Does Video Order Change What Is Discovered?</h2>
+                <d-figure id="fig-growth">
+                    <figure>
+                        <div style="text-align: center;">
+                            <img data-zoomable="" draggable="false" src="static/img/growth.png" alt="Library growth under different video orders" style="width: 70%;">
+                        </div>
+                        <figcaption>
+                            <strong>Figure 2: Library growth under different video orders.</strong>
+                            Unified Qwen3.5-4B with oracle-history SFT on the 40 HD-EPIC clips. Solid and dashed curves show cumulative predicted schemas and observed reference classes, respectively. All three orders end with 21&ndash;22 schemas versus 46 reference classes.
+                        </figcaption>
+                    </figure>
+                </d-figure>
+                <p class="text">
+                    <ul class="text">
+                        <li>
+                            <strong>The library stalls below half the reference size.</strong>
+                            Under the innovation-heavy order, all 46 reference classes have appeared by the twentieth video, yet the model has introduced only 20 schemas. Making novelty appear earlier does not substantially enlarge the final repertoire.
+                        </li>
+                        <li>
+                            <strong>Training makes schema names more order-consistent.</strong>
+                            Oracle-history SFT and CLaRe both reach a mean pairwise Jaccard similarity of 0.78 between final schema-name sets across orders, compared with 0.59 for the zero-shot model.
+                        </li>
+                    </ul>
+                </p>
+
+                <h2 class="text">Which Skills Benefit, and Is Novelty Recognized?</h2>
+                <d-figure id="fig-analysis">
+                    <figure>
+                        <div style="text-align: center;">
+                            <img data-zoomable="" draggable="false" src="static/img/table_analysis.png" alt="Skill grouping and novelty recognition table" style="width: 95%;">
+                        </div>
+                        <figcaption>
+                            <strong>Table 3: Skill grouping and novelty recognition with unified Qwen3.5-4B.</strong>
+                            (a) Macro pair F1 by training frequency (class counts in parentheses).
+                            (b) Classes seen or unseen in task-specific training. For unseen classes, \(k/n\) counts those receiving a new schema name at their first matched occurrence, out of all covered classes. Other scores are multiplied by 100.
+                        </figcaption>
+                    </figure>
+                </d-figure>
+                <p class="text">
+                    <ul class="text">
+                        <li>
+                            <strong>Gains concentrate on frequently demonstrated skills.</strong>
+                            High-frequency classes rise from 19.0 to 34.9&ndash;40.0 pair F1 on HD-EPIC and from 25.5 to 40.9&ndash;51.7 on RoboInter, while medium-frequency classes stay below 10 on both datasets.
+                        </li>
+                        <li>
+                            <strong>Unseen transformations are located but rarely named as new.</strong>
+                            Eleven HD-EPIC test classes are absent from training. After supervision their temporal coverage (57.6&ndash;66.1) exceeds that of seen classes, yet trained models create a new schema at the first matched occurrence of at most one of the nine to ten covered unseen classes.
+                        </li>
+                    </ul>
+                </p>
+            </div>
+
+        </div>
+
+        <div id="conclusion" style="position: relative; margin-top: 40px; margin-bottom: 0px;">
+            <h2 class="text" style="margin-top:0px; margin-bottom:10px">Conclusion</h2>
+            <p class="text">
+                We introduced Video2Skill to study whether models can turn streaming visual experience into a persistent library of reusable skills. Across robot manipulation and egocentric kitchen activity, evaluations of 19 VLMs reveal complementary weaknesses: unified models tend to merge distinct transformations, while factorized models frequently assign recurring transformations to duplicate schemas. Oracle-history SFT, counterfactual library-state rebalancing, and on-policy correction partially alleviate these failures, but do not reliably resolve the boundary between novelty and reuse. Our findings underscore the need to evaluate event coverage and abstraction quality jointly, and establish a testbed for learning coherent skill libraries that remain useful as experience accumulates.
+            </p>
+        </div>
+
+        <div id="acknowledgement" style="position: relative; margin-top: 40px; margin-bottom: 0px;">
+            <h2 class="text" style="margin-top:0px; margin-bottom:10px">Acknowledgement</h2>
+            <p class="text">
+                We thank the <a href="https://cambrian-mllm.github.io/">Cambrian</a> authors for providing this webpage template.
+            </p>
+        </div>
+
+        </d-article>
+        <d-appendix>
+            <h3>BibTeX</h3>
+            <p class="bibtex">
+                @article{zhang2026video2skill,<br>
+                &nbsp;&nbsp;title={Video2Skill: From Streaming Experience to Reusable Embodied Skills},<br>
+                &nbsp;&nbsp;author={Zhang, Jianshu and Zhang, Ce and Yang, Xiyuan and Xu, Chenwei and Lu, Haoran and Li, Yijiang and Xie, Yaqi and Sycara, Katia P. and Liu, Han},<br>
+                &nbsp;&nbsp;journal={arXiv preprint},<br>
+                &nbsp;&nbsp;year={2026}<br>
+                }
+            </p>
+
+            <d-footnote-list></d-footnote-list>
+            <d-citation-list></d-citation-list>
+        </d-appendix>
+        <d-bibliography src="bibliography.bib"></d-bibliography>
+    </body>
+</html>
