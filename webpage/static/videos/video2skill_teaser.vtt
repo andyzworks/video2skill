@@ -1,43 +1,61 @@
 WEBVTT
 
-00:00:00.800 --> 00:00:04.775
-Robots and people perform countless different manipulations.
+00:00:00.800 --> 00:00:05.125
+Manipulation behaviors vary widely across objects and scenes,
 
-00:00:04.925 --> 00:00:08.850
-Yet underneath, they share a handful of reusable skills.
+00:00:05.175 --> 00:00:08.350
+yet they share a small set of reusable skills.
 
-00:00:09.350 --> 00:00:13.750
-Can a vision-language model discover those skills, just by watching?
+00:00:08.650 --> 00:00:12.875
+Planning with these skills helps agents generalize to new tasks.
 
-00:00:16.150 --> 00:00:20.975
-Here's the task. A model watches a stream of videos, one after another.
+00:00:13.175 --> 00:00:16.525
+But an agent can only plan with the skills it knows.
 
-00:00:20.875 --> 00:00:25.350
-It locates each manipulation in time, and writes it as a skill call.
+00:00:17.225 --> 00:00:23.025
+Recovering skills from experience, the inverse of planning, builds this knowledge over time,
 
-00:00:26.150 --> 00:00:30.600
-For every new event, it decides: reuse a skill from its library,
+00:00:23.125 --> 00:00:26.475
+and yields skill data for training future agents.
 
-00:00:32.990 --> 00:00:34.840
+00:00:27.075 --> 00:00:30.675
+Vision-language models describe single events well.
+
+00:00:30.975 --> 00:00:35.150
+But can they organize a stream of events into reusable skills?
+
+00:00:37.150 --> 00:00:44.900
+We call this Streaming Embodied Skill Discovery: a model watches videos in sequence, and keeps a persistent skill library,
+
+00:00:45.000 --> 00:00:48.625
+which shapes its later decisions: reuse a known skill,
+
+00:00:50.355 --> 00:00:52.205
 or create a new one.
 
-00:00:35.540 --> 00:00:40.040
-The library carries over, so every decision shapes what comes next.
+00:00:53.205 --> 00:01:00.380
+Video2Skill covers robot tabletop manipulation and human kitchen activity, and tests three abilities:
 
-00:00:40.440 --> 00:00:44.440
-Reuse too eagerly, and different skills collapse into one.
+00:01:00.380 --> 00:01:06.705
+locating events in time, grouping the same transformation, and deciding when to reuse or create.
 
-00:00:44.740 --> 00:00:47.840
-Create too eagerly, and duplicates pile up.
+00:01:07.305 --> 00:01:14.130
+Across 19 open-source VLMs, many group events near chance, and scale does not consistently help.
 
-00:00:48.540 --> 00:00:55.615
-Video2Skill tests this on robot and human kitchen videos, with over twelve thousand verified skill calls.
+00:01:14.730 --> 00:01:19.355
+Their errors depend on how perception and library updates are coupled:
 
-00:00:55.915 --> 00:01:03.240
-We tested 19 open-source VLMs. Many group events near chance, falling into exactly these two traps.
+00:01:19.355 --> 00:01:25.955
+joint models merge distinct transformations, while models updating from text duplicate recurring ones.
 
-00:01:03.640 --> 00:01:10.665
-Fine-tuning, including our CLaRe method, improves grouping, yet libraries stall below half the reference size.
+00:01:26.655 --> 00:01:32.655
+Fine-tuning, including our CLaRe method, improves grouping, but exposes a deeper bottleneck.
 
-00:01:11.265 --> 00:01:15.815
-The open challenge: recognizing when existing skills are not enough.
+00:01:32.755 --> 00:01:40.405
+Trained models consolidate familiar skills, yet rarely expand the library, stalling below half the reference size.
+
+00:01:40.805 --> 00:01:46.880
+Transformations unseen in training are located in time, but almost never given a new skill.
+
+00:01:47.580 --> 00:01:52.580
+Recognizing when existing skills are insufficient is the central challenge.
