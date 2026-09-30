@@ -35,6 +35,10 @@ header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; fo
 .role::before { content: "· "; }
 .count { margin-left: auto; font-size: 12px; font-variant-numeric: tabular-nums; color: var(--ok); border: 1px solid var(--rule); border-radius: 6px; padding: 1px 6px; }
 .count.warn { color: var(--warn); }
+.count.fold { color: var(--accent); }
+.more { background: none; border: 0; padding: 0; color: var(--link); font: inherit; cursor: pointer; }
+.more:focus-visible { outline: 2px solid var(--link); outline-offset: 2px; border-radius: 4px; }
+.dots { color: var(--ink); }
 .text { margin: 0; font-size: 15px; line-height: 1.45; overflow-wrap: anywhere; }
 .lead .text { font-size: 17px; line-height: 1.45; }
 .text a { color: var(--link); text-decoration: none; }
@@ -51,87 +55,60 @@ header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; fo
   <section class="intro">
     <span class="tag">Draft preview · not posted</span>
     <h1>Video2Skill launch thread</h1>
-    <p>How the 11-post thread will read, with the exact text, media, and character counts from <code>twitter_thread/</code>. The handle is a placeholder until the real one is filled in; replace the names in post 11 with @handles before posting.</p>
+    <p>Six posts for a Premium account: one main post, one on the task and benchmark, three findings, and a takeaway. Posts longer than about 280 characters fold behind "Show more" in the timeline, as shown here. The handle is a placeholder.</p>
   </section>
   <section class="thread" aria-label="Thread draft">
 <article class="post lead">
   <div class="rail"><img class="av" src="m/avatar.jpg" alt=""><span class="line"></span></div>
   <div class="body">
-    <header><span class="name">Jianshu Zhang</span> <span class="handle">@your_handle</span><span class="role">1/11 · Main post</span><span class="count">260/280</span></header>
-    <p class="text">Can a VLM watch a stream of videos and build its own library of reusable skills, deciding when to reuse a skill and when to create a new one?<br><br>We introduce Video2Skill and a new problem: Streaming Embodied Skill Discovery (SESD). 🧵<br><br>📄 <a href="https://arxiv.org/abs/2609.36691" target="_blank" rel="noopener">arxiv.org/abs/2609.36691</a></p><figure class="media" style="aspect-ratio:16 / 10"><img src="m/01_main.gif" alt="Animated loop: robot videos stream in; each event is tagged NEW (orange) and flies into a skill library, or REUSE (teal) and links to an existing skill; the library grows from grasp, transfer, place to pour." loading="eager"><span class="badge">GIF</span></figure><details class="alt"><summary>Alt text</summary><p>Animated loop: robot videos stream in; each event is tagged NEW (orange) and flies into a skill library, or REUSE (teal) and links to an existing skill; the library grows from grasp, transfer, place to pour.</p></details>
+    <header><span class="name">Jianshu Zhang</span> <span class="handle">@your_handle</span><span class="role">1/6 · Main post</span><span class="count">260/280</span></header>
+    <p class="text">Can a VLM watch a stream of videos and build its own library of reusable skills, deciding when to reuse a skill and when to create a new one?<br><br>We introduce Video2Skill and a new problem: Streaming Embodied Skill Discovery (SESD). 🧵<br><br>📄 <a href="https://arxiv.org/abs/2609.36691" target="_blank" rel="noopener">arxiv.org/abs/2609.36691</a></p><figure class="media" style="aspect-ratio:16 / 10"><img src="m/1_main.gif" alt="Animated loop: robot videos stream in; each event is tagged NEW (orange) and flies into a skill library, or REUSE (teal) and links to an existing skill; the library grows from grasp, transfer, place to pour." loading="eager"><span class="badge">GIF</span></figure><details class="alt"><summary>Alt text</summary><p>Animated loop: robot videos stream in; each event is tagged NEW (orange) and flies into a skill library, or REUSE (teal) and links to an existing skill; the library grows from grasp, transfer, place to pour.</p></details>
   </div>
 </article>
 <article class="post">
   <div class="rail"><img class="av" src="m/avatar.jpg" alt=""><span class="line"></span></div>
   <div class="body">
-    <header><span class="name">Jianshu Zhang</span> <span class="handle">@your_handle</span><span class="role">2/11 · Why skills</span><span class="count">275/280</span></header>
-    <p class="text">Why skills? Manipulation varies across objects and scenes, yet shares a small set of reusable skills, and planning with them helps agents generalize.<br><br>But an agent can only plan with skills it knows. Recovering skills from experience, the inverse of planning, grows that set.</p><figure class="media" style="aspect-ratio:16 / 9"><img src="m/02_why_skills.jpg" alt="Two new tasks: &quot;put the cup in the sink&quot; is planned as grasp, transfer, place; &quot;water the plant&quot; fails because the pour skill is unknown." loading="eager"></figure><details class="alt"><summary>Alt text</summary><p>Two new tasks: &quot;put the cup in the sink&quot; is planned as grasp, transfer, place; &quot;water the plant&quot; fails because the pour skill is unknown.</p></details>
+    <header><span class="name">Jianshu Zhang</span> <span class="handle">@your_handle</span><span class="role">2/6 · Task and benchmark</span><span class="count fold">681 chars · folds</span></header>
+    <p class="text"><span class="shown">The task: watch videos one after another. For each manipulation, locate it in time, write it as a skill call like grasp(obj, src), and decide: reuse a known skill or create a new one.<br><br>Video2Skill covers robot (DROID/RH20T) and kitchen (HD-EPIC) video: 12,429 verified calls.</span><span class="dots">… </span><button class="more" type="button" aria-expanded="false">Show more</button><span class="rest" hidden><br>Why skills: manipulation varies across objects and scenes but shares a small set of reusable skills, and planning with them helps agents generalize. An agent can only plan with skills it knows, so recovering skills from experience is the inverse of planning.<br><br>Scoring is naming-invariant: 48 reference classes are never shown to the model, and we compare how events are grouped, not what they are called.</span></p><figure class="media" style="aspect-ratio:16 / 9"><img src="m/2_task.jpg" alt="Streaming Embodied Skill Discovery: a robot video with events tagged REUSE and NEW, next to a persistent skill library with usage counts." loading="eager"></figure><details class="alt"><summary>Alt text</summary><p>Streaming Embodied Skill Discovery: a robot video with events tagged REUSE and NEW, next to a persistent skill library with usage counts.</p></details>
   </div>
 </article>
 <article class="post">
   <div class="rail"><img class="av" src="m/avatar.jpg" alt=""><span class="line"></span></div>
   <div class="body">
-    <header><span class="name">Jianshu Zhang</span> <span class="handle">@your_handle</span><span class="role">3/11 · The task</span><span class="count">270/280</span></header>
-    <p class="text">SESD: a model watches videos one after another. For each manipulation it<br>1) locates it in time,<br>2) writes it as a skill call, e.g. grasp(obj, src),<br>3) decides: reuse a skill from its library, or create a new one.<br><br>The library persists, so every decision shapes the next.</p><figure class="media" style="aspect-ratio:16 / 9"><img src="m/03_task.jpg" alt="Streaming Embodied Skill Discovery: a robot video with events tagged REUSE and NEW, next to a persistent skill library with usage counts." loading="lazy"></figure><details class="alt"><summary>Alt text</summary><p>Streaming Embodied Skill Discovery: a robot video with events tagged REUSE and NEW, next to a persistent skill library with usage counts.</p></details>
+    <header><span class="name">Jianshu Zhang</span> <span class="handle">@your_handle</span><span class="role">3/6 · Finding 1</span><span class="count">241/280</span></header>
+    <p class="text">Finding 1: across 19 open-source VLMs, many models group events near chance (best ARI ≤ 27 out of 100).<br><br>Scale is not a reliable fix: going from Qwen3.5-4B to 27B raises ARI on HD-EPIC (8.7 → 19.9) but lowers it on RoboInter (19.4 → 4.6).</p><figure class="media" style="aspect-ratio:16 / 9"><img src="m/3_zero_shot.jpg" alt="Best skill-grouping agreement (ARI) of 19 open-source VLMs is at most 27 out of 100; scaling Qwen3.5 from 4B to 27B raises ARI on HD-EPIC (8.7 to 19.9) but lowers it on RoboInter (19.4 to 4.6)." loading="lazy"></figure><details class="alt"><summary>Alt text</summary><p>Best skill-grouping agreement (ARI) of 19 open-source VLMs is at most 27 out of 100; scaling Qwen3.5 from 4B to 27B raises ARI on HD-EPIC (8.7 to 19.9) but lowers it on RoboInter (19.4 to 4.6).</p></details>
   </div>
 </article>
 <article class="post">
   <div class="rail"><img class="av" src="m/avatar.jpg" alt=""><span class="line"></span></div>
   <div class="body">
-    <header><span class="name">Jianshu Zhang</span> <span class="handle">@your_handle</span><span class="role">4/11 · Benchmark</span><span class="count">258/280</span></header>
-    <p class="text">Video2Skill spans robot tabletop manipulation (DROID/RH20T via RoboInter) and egocentric kitchens (HD-EPIC): 12,429 verified skill calls, 48 transformation classes.<br><br>Scoring is naming-invariant: we check how events are grouped, not what the model calls them.</p><figure class="media" style="aspect-ratio:16 / 9"><img src="m/04_benchmark.jpg" alt="Video2Skill benchmark: robot tabletop and human kitchen footage; 12,429 verified skill calls, 48 transformation classes; three abilities scored." loading="lazy"></figure><details class="alt"><summary>Alt text</summary><p>Video2Skill benchmark: robot tabletop and human kitchen footage; 12,429 verified skill calls, 48 transformation classes; three abilities scored.</p></details>
+    <header><span class="name">Jianshu Zhang</span> <span class="handle">@your_handle</span><span class="role">4/6 · Finding 2</span><span class="count">269/280</span></header>
+    <p class="text">Finding 2: how models fail depends on how perception and library updates are coupled.<br><br>• Joint models (video + library in one pass) merge distinct transformations: pouring and placing become one skill.<br>• Models updating the library from text duplicate recurring ones.</p><figure class="media" style="aspect-ratio:16 / 9"><img src="m/4_coupling.jpg" alt="Joint models merge distinct transformations (pour absorbed into place); text-update models duplicate recurring ones (grasp re-created as pick_up, grab, take)." loading="lazy"></figure><details class="alt"><summary>Alt text</summary><p>Joint models merge distinct transformations (pour absorbed into place); text-update models duplicate recurring ones (grasp re-created as pick_up, grab, take).</p></details>
   </div>
 </article>
 <article class="post">
   <div class="rail"><img class="av" src="m/avatar.jpg" alt=""><span class="line"></span></div>
   <div class="body">
-    <header><span class="name">Jianshu Zhang</span> <span class="handle">@your_handle</span><span class="role">5/11 · Finding 1</span><span class="count">241/280</span></header>
-    <p class="text">Finding 1: across 19 open-source VLMs, many models group events near chance (best ARI ≤ 27 out of 100).<br><br>Scale is not a reliable fix: going from Qwen3.5-4B to 27B raises ARI on HD-EPIC (8.7 → 19.9) but lowers it on RoboInter (19.4 → 4.6).</p><figure class="media" style="aspect-ratio:16 / 9"><img src="m/05_zero_shot.jpg" alt="Best skill-grouping agreement (ARI) of 19 open-source VLMs is at most 27 out of 100; scaling Qwen3.5 from 4B to 27B raises ARI on HD-EPIC (8.7 to 19.9) but lowers it on RoboInter (19.4 to 4.6)." loading="lazy"></figure><details class="alt"><summary>Alt text</summary><p>Best skill-grouping agreement (ARI) of 19 open-source VLMs is at most 27 out of 100; scaling Qwen3.5 from 4B to 27B raises ARI on HD-EPIC (8.7 to 19.9) but lowers it on RoboInter (19.4 to 4.6).</p></details>
-  </div>
-</article>
-<article class="post">
-  <div class="rail"><img class="av" src="m/avatar.jpg" alt=""><span class="line"></span></div>
-  <div class="body">
-    <header><span class="name">Jianshu Zhang</span> <span class="handle">@your_handle</span><span class="role">6/11 · Finding 2</span><span class="count">269/280</span></header>
-    <p class="text">Finding 2: how models fail depends on how perception and library updates are coupled.<br><br>• Joint models (video + library in one pass) merge distinct transformations: pouring and placing become one skill.<br>• Models updating the library from text duplicate recurring ones.</p><figure class="media" style="aspect-ratio:16 / 9"><img src="m/06_coupling.jpg" alt="Joint models merge distinct transformations (pour absorbed into place); text-update models duplicate recurring ones (grasp re-created as pick_up, grab, take)." loading="lazy"></figure><details class="alt"><summary>Alt text</summary><p>Joint models merge distinct transformations (pour absorbed into place); text-update models duplicate recurring ones (grasp re-created as pick_up, grab, take).</p></details>
-  </div>
-</article>
-<article class="post">
-  <div class="rail"><img class="av" src="m/avatar.jpg" alt=""><span class="line"></span></div>
-  <div class="body">
-    <header><span class="name">Jianshu Zhang</span> <span class="handle">@your_handle</span><span class="role">7/11 · Finding 3</span><span class="count">264/280</span></header>
-    <p class="text">Finding 3: fine-tuning, incl. our counterfactual library-state rebalancing (CLaRe), improves grouping but exposes a deeper bottleneck.<br><br>Models consolidate familiar skills yet rarely expand the library: on HD-EPIC it stalls at 21–22 skills vs. 46 reference classes.</p><figure class="media" style="aspect-ratio:16 / 9"><img src="m/07_library_stalls.jpg" alt="After fine-tuning the learned library holds 21-22 skills versus 46 reference transformation classes." loading="lazy"></figure><details class="alt"><summary>Alt text</summary><p>After fine-tuning the learned library holds 21-22 skills versus 46 reference transformation classes.</p></details>
-  </div>
-</article>
-<article class="post">
-  <div class="rail"><img class="av" src="m/avatar.jpg" alt=""><span class="line"></span></div>
-  <div class="body">
-    <header><span class="name">Jianshu Zhang</span> <span class="handle">@your_handle</span><span class="role">8/11 · Finding 3, cont.</span><span class="count">228/280</span></header>
-    <p class="text">Transformations never seen in training (e.g. grating, shredding) are located in time even more often than seen ones, but almost never get a new skill: at most 1 of the 9–10 covered unseen classes is named as new when first seen.</p><figure class="media" style="aspect-ratio:16 / 9"><img src="m/08_unseen.jpg" alt="A lemon-grating clip, a transformation unseen in training: located in time (coverage 58-66%), but at most 1 of 9-10 covered unseen classes gets a new skill." loading="lazy"></figure><details class="alt"><summary>Alt text</summary><p>A lemon-grating clip, a transformation unseen in training: located in time (coverage 58-66%), but at most 1 of 9-10 covered unseen classes gets a new skill.</p></details>
-  </div>
-</article>
-<article class="post">
-  <div class="rail"><img class="av" src="m/avatar.jpg" alt=""><span class="line"></span></div>
-  <div class="body">
-    <header><span class="name">Jianshu Zhang</span> <span class="handle">@your_handle</span><span class="role">9/11 · Takeaway and scope</span><span class="count">267/280</span></header>
-    <p class="text">Takeaway: describing single events is not the bottleneck. Recognizing when your existing skills are not enough is.<br><br>To be clear about scope: our skills are semantic abstractions of observed transformations, not executable controllers, and we cover two domains so far.</p><figure class="media" style="aspect-ratio:16 / 9"><img src="m/09_takeaway.jpg" alt="The central challenge: recognizing when existing skills are insufficient." loading="lazy"></figure><details class="alt"><summary>Alt text</summary><p>The central challenge: recognizing when existing skills are insufficient.</p></details>
-  </div>
-</article>
-<article class="post">
-  <div class="rail"><img class="av" src="m/avatar.jpg" alt=""><span class="line"></span></div>
-  <div class="body">
-    <header><span class="name">Jianshu Zhang</span> <span class="handle">@your_handle</span><span class="role">10/11 · Invitation and links</span><span class="count">216/280</span></header>
-    <p class="text">Benchmark (clips, annotations, eval streams) is open. If you work on agents that learn from video, we&#x27;d love to see what you build on it.<br><br>🎬 2-min walkthrough ↓<br>🤗 <a href="https://huggingface.co/datasets/Sterzhang/video2skill-bench" target="_blank" rel="noopener">huggingface.co/datasets/S…</a><br>🌐 <a href="https://andyzworks.github.io/video2skill/" target="_blank" rel="noopener">andyzworks.github.io/vide…</a></p><figure class="media" style="aspect-ratio:16 / 9"><video controls preload="metadata" playsinline poster="m/10_poster.jpg" src="m/10_walkthrough.mp4"></video></figure><details class="alt"><summary>Alt text</summary><p>Two-minute narrated walkthrough of Video2Skill, with captions.</p></details>
+    <header><span class="name">Jianshu Zhang</span> <span class="handle">@your_handle</span><span class="role">5/6 · Finding 3</span><span class="count fold">482 chars · folds</span></header>
+    <p class="text"><span class="shown">Finding 3: fine-tuning (incl. our CLaRe) improves grouping but exposes a deeper bottleneck: familiar skills get consolidated, yet the library rarely grows.<br><br>On HD-EPIC it stalls at 21–22 skills vs. 46 classes. Unseen transformations are located but almost never named as new.</span><span class="dots">… </span><button class="more" type="button" aria-expanded="false">Show more</button><span class="rest" hidden><br>For the 11 HD-EPIC classes absent from training, coverage after fine-tuning is 58–66% (higher than for seen classes), yet at most 1 of the 9–10 covered unseen classes gets a new skill name when first seen.</span></p><figure class="media" style="aspect-ratio:16 / 9"><img src="m/5_bottleneck.jpg" alt="Left: after fine-tuning the learned library holds 21-22 skills versus 46 reference classes. Right: a lemon-grating clip, a transformation unseen in training, is located in time (coverage 58-66%) but at most 1 of 9-10 such classes is named as new." loading="lazy"></figure><details class="alt"><summary>Alt text</summary><p>Left: after fine-tuning the learned library holds 21-22 skills versus 46 reference classes. Right: a lemon-grating clip, a transformation unseen in training, is located in time (coverage 58-66%) but at most 1 of 9-10 such classes is named as new.</p></details>
   </div>
 </article>
 <article class="post">
   <div class="rail"><img class="av" src="m/avatar.jpg" alt=""></div>
   <div class="body">
-    <header><span class="name">Jianshu Zhang</span> <span class="handle">@your_handle</span><span class="role">11/11 · Credits</span><span class="count">161/280</span></header>
-    <p class="text">Joint work with Ce Zhang (co-first), Xiyuan Yang, Chenwei Xu, Haoran Lu, Yijiang Li, Yaqi Xie, Katia Sycara, and Han Liu at Northwestern, CMU, UIUC, and UCSD. 🙏</p>
+    <header><span class="name">Jianshu Zhang</span> <span class="handle">@your_handle</span><span class="role">6/6 · Takeaway and links</span><span class="count fold">453 chars · folds</span></header>
+    <p class="text"><span class="shown">Takeaway: the central challenge is recognizing when existing skills are not enough. (Our skills are semantic abstractions of observed transformations, not controllers.)<br><br>Data is open; we&#x27;d love to see what you build.<br>🤗 <a href="https://huggingface.co/datasets/Sterzhang/video2skill-bench" target="_blank" rel="noopener">huggingface.co/datasets/S…</a><br>🌐 <a href="https://andyzworks.github.io/video2skill/" target="_blank" rel="noopener">andyzworks.github.io/vide…</a><br><br>Joint</span><span class="dots">… </span><button class="more" type="button" aria-expanded="false">Show more</button><span class="rest" hidden> work with Ce Zhang (co-first), Xiyuan Yang, Chenwei Xu, Haoran Lu, Yijiang Li, Yaqi Xie, Katia Sycara, and Han Liu (Northwestern, CMU, UIUC, UCSD).<br>🎬 2-min walkthrough below.</span></p><figure class="media" style="aspect-ratio:16 / 9"><video controls preload="metadata" playsinline poster="m/6_poster.jpg" src="m/6_walkthrough.mp4"></video></figure><details class="alt"><summary>Alt text</summary><p>Two-minute narrated walkthrough of Video2Skill, with captions.</p></details>
   </div>
 </article>
   </section>
 </main>
+<script>
+document.querySelectorAll('.more').forEach(function (b) {
+  b.addEventListener('click', function () {
+    var p = b.parentElement, rest = p.querySelector('.rest'), dots = p.querySelector('.dots');
+    rest.hidden = false; dots.hidden = true; b.hidden = true;
+  });
+});
+</script>
 </body>
 </html>
