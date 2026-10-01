@@ -1593,3 +1593,10 @@ iframe {
     color: #CC0000;
     font-weight: 500;
 }
+
+.button-container a.button.is-disabled,
+.button-container a.button.is-disabled:hover {
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.55;
+}
